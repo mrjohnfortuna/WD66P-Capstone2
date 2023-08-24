@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recruitment Checklist</title>
+
+    <!--Custom Font-->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!--Custom Icons-->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+      rel="stylesheet"
+    />
+
+    <!--Custom CSS-->
+    <link rel="stylesheet" href="checklist.css" />
+  </head>
+  <body>
+    <div class="grid-container">
+      <!--Header-->
+      <header class="header">
+        <div class="menu-icon" onclick="openSidebar()">
+          <span class="material-icons-outlined" type="button"> menu </span>
+        </div>
+        <div class="header-left">
+          <span class="material-icons-outlined"> search </span>
+          <input
+            type="text"
+            placeholder="Search"
+            onclick="event.stopPropagation();"
+          />
+        </div>
+        <div class="header-right">
+        <a href="">
+          <span class="material-icons-outlined"> notifications </span>
+        </a>
+        <a href="sendemail/index.php">
+          <span class="material-icons-outlined"> email </span>
+        </a>
+        <a href="">
+          <span class="material-icons-outlined"> account_circle </span>
+          </a>
+        </div>
+      </header>
+
+      <!--Sidebar-->
+      <aside id="sidebar">
+        <div class="sidebar-title">
+          <div class="sidebar-brand">
+            <img src="Images/IBI-Logo2.png" alt="IBI Logo" />
+            <b>Recruitment</b>
+          </div>
+          <span class="material-icons-outlined" onclick="closeSidebar()">
+            close
+          </span>
+        </div>
+
+        <ul class="sidebar-list">
+          <li class="sidebar-list-item">
+            <a class="sidebar-link" href="dashboard.php">
+              <span class="material-icons-outlined"> dashboard </span>
+              <b>Dashboard</b>
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a class="sidebar-link" href="jobs.php">
+              <span class="material-icons-outlined"> work_outline </span>
+              <b>Jobs</b>
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <span class="material-icons-outlined"> people_alt </span
+            ><b>Candidates</b>
+          </li>
+          <li class="sidebar-list-item">
+            <a class="sidebar-link" href="checklist.html">
+              <span class="material-icons-outlined"> checklist </span>
+              <b>Checklist</b>
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a class="sidebar-link" href="fullCalendar/index.php">
+            <span class="material-icons-outlined"> event </span><b>Calendar</b> 
+          </a>
+          </li>
+          <li class="sidebar-list-item">
+            <span class="material-icons-outlined"> settings </span
+            ><b>Settings</b>
+          </li>
+        </ul>
+      </aside>
+
+      <!--Main-->
+      <main class="main-container">
+        <div class="main-title">
+          <p class="font-weight-bold"><b>RECRUITMENT CHECKLIST</b></p>
+        </div>
+
+<div class="checklistHtml">
+  <div class="columnChecklist">
+    <h2>Active Tasks</h2>
+    <ul id="activeItemsChecklist">
+            <li><input type="checkbox" /><label>Job Description</label></li>
+            <li><input type="checkbox" /><label>Job Posting</label></li>
+            <li><input type="checkbox" /><label>Application Form</label></li>
+            <li><input type="checkbox" /><label>Resume Screening</label></li>
+            <li><input type="checkbox" /><label>Phone Screening</label></li>
+            <li><input type="checkbox" /><label>Interviews</label></li>
+            <li><input type="checkbox" /><label>Reference Checks</label></li>
+            <li><input type="checkbox" /><label>Offer Letter</label></li>
+            <li><input type="checkbox" /><label>Hiring Decision</label></li>
+          </ul>
+        </div>
+        <div class="columnChecklist">
+          <h2>Completed Tasks</h2>
+          <ul id="removedItemsChecklist">
+
+          </ul>
+        </div>
+      </main>
+    </div>
+    <!--Scripts-->
+    <!--Custom JS-->
+    <script src="script.js"></script>
+    <script>
+const activeItemsList = document.getElementById('activeItemsChecklist');
+const removedItemsList = document.getElementById('removedItemsChecklist');
+
+const checkboxes = document.querySelectorAll('.checklistHtml input[type="checkbox"]');
+
+checkboxes.forEach(checkbox => {
+  checkbox.addEventListener('change', () => {
+    const listItem = checkbox.parentElement;
+
+    if (checkbox.checked) {
+      listItem.remove();
+      removedItemsList.appendChild(listItem);
+    } else {
+      listItem.remove();
+      activeItemsList.appendChild(listItem);
+    }
+  });
+});
+    </script>
+  </body>
+</html>
