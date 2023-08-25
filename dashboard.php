@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-// Redirects user who is not authenticated
+//redirection
 if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
-    header("Location: index.html");
+    header("Location: index.php");
     exit();
 }
 ?>
@@ -13,25 +13,26 @@ if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- jQuery Library -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-        <!--ApexCharts-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.40.0/apexcharts.min.js"></script>
+    <!-- Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
     <title>IBI Applicant Tracking System</title>
-
-    <!--Custom Font-->
+    
+    <!-- Custom Font -->
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500&display=swap"
       rel="stylesheet"
     />
-
-    <!--Custom Icons-->
+    
+    <!-- Custom Icons -->
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
       rel="stylesheet"
     />
-
-    <!--Custom CSS-->
+    
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="main.css" />
   </head>
   <body>
@@ -82,23 +83,24 @@ if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
             </a>
           </li>
           <li class="sidebar-list-item">
-            <a class="sidebar-link" href="jobs.php">
+            <a class="sidebar-link" href="../testPHP/jobs/jobs.php">
               <span class="material-icons-outlined"> work_outline </span>
               <b>Jobs</b>
             </a>
           </li>
           <li class="sidebar-list-item">
+          <a class="sidebar-link" href="../testPHP/candidates/candidates.php">
             <span class="material-icons-outlined"> people_alt </span
             ><b>Candidates</b>
           </li>
           <li class="sidebar-list-item">
-            <a class="sidebar-link" href="checklist.html">
+            <a class="sidebar-link" href="../testPHP/checklist/checklist.html">
               <span class="material-icons-outlined"> checklist </span>
               <b>Checklist</b>
             </a>
           </li>
           <li class="sidebar-list-item">
-            <a class="sidebar-link" href="fullCalendar/index.php">
+            <a class="sidebar-link" href="../testPHP/fullCalendar/index.php">
             <span class="material-icons-outlined"> event </span><b>Calendar</b> 
           </a>
           </li>
@@ -166,21 +168,19 @@ if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
         <div class="charts">
           <div class="charts-card">
             <p class="chart-title">Jobs to Fill per Position</p>
-            <div id="bar-chart"></div>
+            <canvas id="bar-chart"></canvas>
           </div>
 
           <div class="charts-card">
             <p class="chart-title">
               Number of Hiring Needs vs Active Candidates
             </p>
-            <div id="area-chart"></div>
+            <canvas id="area-chart"></canvas>
           </div>
         </div>
       </main>
     </div>
     <!--Scripts-->
-
-    <!--Custom JS-->
     <script src="script.js"></script>
   </body>
 </html>

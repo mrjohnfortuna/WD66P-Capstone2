@@ -1,0 +1,52 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #fff;
+    color: #486684;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+form {
+    text-align: center;
+    border: 2px solid #486684;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: white;
+}
+
+form label {
+    font-weight: bold;
+}
+
+form input {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #486684;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+form button {
+    background-color: #486684;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+form a {
+    text-decoration: none;
+    color: #486684;
+    margin-left: 10px;
+}
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+}

@@ -158,7 +158,7 @@ $query = $conn->query("SELECT * FROM events ORDER BY id");
       <aside id="sidebar">
         <div class="sidebar-title">
           <div class="sidebar-brand">
-            <img src="../Images/IBI-Logo2.png" alt="IBI Logo" />
+            <img src="/testPHP/Images/IBI-Logo2.png" alt="IBI Logo" />
             <b>Recruitment</b>
           </div>
           <span class="material-icons-outlined" onclick="closeSidebar()">
@@ -168,32 +168,32 @@ $query = $conn->query("SELECT * FROM events ORDER BY id");
 
         <ul class="sidebar-list">
           <li class="sidebar-list-item">
-            <a class="sidebar-link" href="../dashboard.php">
+            <a class="sidebar-link" href="/testPHP/dashboard.php">
               <span class="material-icons-outlined"> dashboard </span>
               <b>Dashboard</b>
             </a>
           </li>
           <li class="sidebar-list-item">
-            <a class="sidebar-link" href="../jobs.php">
+            <a class="sidebar-link" href="/testPHP/jobs/jobs.php">
               <span class="material-icons-outlined"> work_outline </span>
               <b>Jobs</b>
             </a>
           </li>
           <li class="sidebar-list-item">
+          <a class="sidebar-link" href="/testPHP/jobs/jobs.php">
             <span class="material-icons-outlined"> people_alt </span
             ><b>Candidates</b>
           </li>
           <li class="sidebar-list-item">
-            <a class="sidebar-link" href="../checklist.html">
+            <a class="sidebar-link" href="/testPHP/checklist/checklist.html">
               <span class="material-icons-outlined"> checklist </span>
               <b>Checklist</b>
             </a>
           </li>
           <li class="sidebar-list-item">
-            <a class="sidebar-link" href="fullCalendar/index.php">
+            <a class="sidebar-link" href="/testPHP/fullCalendar/index.php">
             <span class="material-icons-outlined"> event </span><b>Calendar</b> 
           </a>
-          </li>
           </li>
           <li class="sidebar-list-item">
             <span class="material-icons-outlined"> settings </span

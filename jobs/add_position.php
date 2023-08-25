@@ -16,8 +16,8 @@ if ($conn->query($insertQuery) === TRUE) {
 }
 
 $response = [
-    'success' => true, // or false if the operation wasn't successful
-    'message' => 'Position added successfully' // Provide an appropriate message
+    'success' => true, 
+    'message' => 'Position added successfully' // message when true
 ];
 
 // Send the JSON response

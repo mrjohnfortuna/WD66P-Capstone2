@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "user_auth";
+$dbname = "jobs_db";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 

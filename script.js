@@ -1,4 +1,4 @@
-//SIDEBAR TOGGLE
+// SIDEBAR TOGGLE
 console.log("Script started");
 var sidebarOpen = false;
 var sidebar = document.getElementById("sidebar");
@@ -13,146 +13,104 @@ function closeSidebar() {
   sidebar.classList.remove("sidebar-responsive");
 }
 
-// JOBS.HTML
 $(document).ready(function() {
   // Fetch data from getjobs.php using AJAX
   $.ajax({
-    url: 'getjobs.php',
+    url: 'jobs/getjobs.php',
     dataType: 'json',
     success: function(data) {
+      console.log("Received data:", data);
       // Data has been successfully fetched, populate the table with data
       var tableBody = $('#jobs-table tbody');
-      
-      // Clear existing rows, in case you are dynamically updating the table
+
+      // Clearing existing rows
       tableBody.empty();
 
-      // Loop through the data and create rows for each entry
+      // Looping and creating row per entry
       data.forEach(function(entry) {
         var row = $('<tr>');
-        row.append($('<td>').text(entry.id)); // Replace with actual column name
+        row.append($('<td>').text(entry.id)); 
         row.append($('<td>').text(entry.jobTitle));
         row.append($('<td>').text(entry.department));
         row.append($('<td>').text(entry.headcountsToFill));
-        row.append($('<td>').text(entry.status)); // Replace with actual column name
+        row.append($('<td>').text(entry.status)); 
         tableBody.append(row);
       });
-    },
-    error: function() {
-      console.error('Error fetching data from getjobs.php');
-    }
-  });
 
-// BAR CHART
+      // Create the bar chart
+      var jobTitles = [];
+      var headcountsToFill = [];
+      var activeCandidates = [];
 
-$(document).ready(function() {
-  // Fetch data from getjobs.php using AJAX
-  $.ajax({
-    url: 'getjobs.php',
-    dataType: 'json',
-    success: function(data) {
-      console.log("Fetched data:", data);
-      // Data has been successfully fetched, update the chart configuration
-      var jobTitles = data.map(entry => entry.jobTitle);
+      // Extract data for the area chart
+      data.forEach(function(entry) {
+        jobTitles.push(entry.jobTitle);
+        headcountsToFill.push(parseInt(entry.headcountsToFill));
+        activeCandidates.push(parseInt(entry.activeCandidates)); 
+      });
 
-      var barChartOptions = {
-        series: [{
-          data: data.map(entry => parseInt(entry.headcountsToFill))
-        }],
-        chart: {
-          type: 'bar',
-          height: 350,
-          toolbar: {
-            show: false
+      var ctx = document.getElementById("bar-chart").getContext("2d");
+      var barChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: jobTitles,
+          datasets: [{
+            label: "Headcounts To Fill",
+            data: headcountsToFill,
+            backgroundColor: "rgba(54, 162, 235, 0.5)", 
+            borderColor: "rgba(54, 162, 235, 1)",
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
+      // Create the area chart
+      var areaChartData = {
+        labels: ["Total"],
+        datasets: [
+          {
+            label: "Total Headcounts To Fill",
+            data: [totalHeadcounts],
+            backgroundColor: "rgba(54, 162, 235, 0.5)", 
+            borderColor: "rgba(54, 162, 235, 1)",
+            borderWidth: 1,
+            fill: true
           },
-        },
-        colors: [
-          "#cc3c43",
-          "#367952",
-          "#f5b74f",
-          "#246dec",
-          "#486684",
-          "#BF40BF"
-        ],
-        plotOptions: {
-          bar: {
-            distributed: true,
-            borderRadius: 4,
-            horizontal: false,
-            columnWidth: '40%',
+          {
+            label: "Total Active Candidates",
+            data: [totalActiveCandidates],
+            backgroundColor: "rgba(255, 99, 132, 0.5)", 
+            borderColor: "rgba(255, 99, 132, 1)",
+            borderWidth: 1,
+            fill: true
           }
-        },
-        dataLabels: {
-          enabled: false
-        },
-        legend: {
-          show: false
-        },
-        xaxis: {
-          categories: jobTitles,
-        },
-        yaxis: {
-          title: {
-            text: "Headcounts To Fill" // Update the y-axis title
-          }
-        },
+        ]
       };
-      console.log("Before chart initialization");
-      var barChart = new ApexCharts(document.querySelector("#bar-chart"), barChartOptions);
-      barChart.render();
-      console.log("After chart initialization");
+
+      var ctx = document.getElementById("area-chart").getContext("2d");
+      new Chart(ctx, {
+        type: "line",
+        data: areaChartData,
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
     },
     error: function() {
       console.error('Error fetching data from getjobs.php');
     }
   });
 
-  //AREA CHART
-       
-  var areaChartOptions = {
-    series: [{
-    name: 'Hiring Needs',
-    data: [2, 3, 1, 5, 2, 3]
-  }, {
-    name: 'Active Candidates',
-    data: [1, 0, 0, 3, 2, 4]
-  }],
-    chart: {
-    height: 350,
-    type: 'area',
-    toolbar: {
-        show: false,
-    },
-  },
-  colors: ["#367952", "#f5b74f"],
-  dataLabels: {
-    enabled: false,
-  },
-  stroke: {
-    curve: 'smooth'
-  },
-  labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4','Week 5','Week 6'],
-  markers: {
-    size: 0
-  },
-  yaxis: [
-    {
-      title: {
-        text: 'Hiring Needs',
-      },
-    },
-    {
-      opposite: true,
-      title: {
-        text: 'Active Candidates',
-      },
-    },
-  ],
-  tooltip: {
-    shared: true,
-    intersect: false,
-  }
-  };
-
-  var areaChart = new ApexCharts(document.querySelector("#area-chart"), areaChartOptions);
-  areaChart.render();
 });

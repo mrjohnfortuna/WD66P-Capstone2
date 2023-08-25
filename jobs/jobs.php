@@ -22,14 +22,14 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="/testPHP/main.css">
 </head>
 <body>
 
     <!-- Fetch and populate data -->
     <?php
     include('dbcon.php');
-    $query = $conn->query("SELECT * FROM `jobs to fill`"); // Update table name if needed
+    $query = $conn->query("SELECT * FROM `jobs to fill`"); // Updating table
     $data = [];
     while ($row = $query->fetch_assoc()) {
         $data[] = $row;
@@ -67,7 +67,7 @@
       <aside id="sidebar">
         <div class="sidebar-title">
           <div class="sidebar-brand">
-            <img src="Images/IBI-Logo2.png" alt="IBI Logo" />
+            <img src="/testPHP/Images/IBI-Logo2.png" alt="IBI Logo" />
             <b>Recruitment</b>
           </div>
           <span class="material-icons-outlined" onclick="closeSidebar()">
@@ -77,32 +77,32 @@
 
         <ul class="sidebar-list">
           <li class="sidebar-list-item">
-            <a class="sidebar-link" href="dashboard.php">
+            <a class="sidebar-link" href="/testPHP/dashboard.php">
               <span class="material-icons-outlined"> dashboard </span>
               <b>Dashboard</b>
             </a>
           </li>
           <li class="sidebar-list-item">
-            <a class="sidebar-link" href="jobs.html">
+            <a class="sidebar-link" href="/testPHP/jobs/jobs.php">
               <span class="material-icons-outlined"> work_outline </span>
               <b>Jobs</b>
             </a>
           </li>
           <li class="sidebar-list-item">
+          <a class="sidebar-link" href="/testPHP/candidates/candidates.php">
             <span class="material-icons-outlined"> people_alt </span
             ><b>Candidates</b>
           </li>
           <li class="sidebar-list-item">
-            <a class="sidebar-link" href="checklist.html">
+            <a class="sidebar-link" href="/testPHP/checklist/checklist.html">
               <span class="material-icons-outlined"> checklist </span>
               <b>Checklist</b>
             </a>
           </li>
           <li class="sidebar-list-item">
-            <a class="sidebar-link" href="fullCalendar/index.php">
+            <a class="sidebar-link" href="/testPHP/fullCalendar/index.php">
             <span class="material-icons-outlined"> event </span><b>Calendar</b> 
           </a>
-          </li>
           </li>
           <li class="sidebar-list-item">
             <span class="material-icons-outlined"> settings </span
@@ -194,6 +194,70 @@
 
 <!-- Load DataTables JavaScript -->
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
+<!-- Initialize DataTables and other scripts -->
+<script>
+    $(document).ready(function() {
+        // Initialize DataTables
+        $('#jobs-table').DataTable();
+
+        // Show the add position modal
+        $('#addPositionButton').click(function() {
+            $('#addPositionModal').modal('show');
+        });
+
+        // Handle save position button click
+        $('#savePositionButton').click(function() {
+            // Get input values
+            var jobTitle = $('#jobTitle').val();
+            var department = $('#department').val();
+            var headcountsToFill = $('#headcountsToFill').val();
+            var status = $('#status').val();
+
+            // Send data to the server using AJAX
+            $.ajax({
+                url: 'add_position.php', // server-side script
+                method: 'POST',
+                data: {
+                    jobTitle: jobTitle,
+                    department: department,
+                    headcountsToFill: headcountsToFill,
+                    status: status
+                },
+                success: function(response) {
+                    // Refreshing table to show updated data
+                    $('#jobs-table').DataTable().ajax.reload();
+                    // Closing of modal
+                    $('#addPositionModal').modal('hide');
+                }
+            });
+        });
+    });
+
+    // Handle delete position button click
+$(document).on('click', '.delete-position', function() {
+    var positionId = $(this).data('id');
+
+    if (confirm('Are you sure you want to delete this position?')) {
+        $.ajax({
+            url: 'delete_position.php',
+            method: 'POST',
+            data: {
+                id: positionId
+            },
+            success: function(response) {
+                if (response.success) {
+                    alert('Position deleted successfully');
+                    $('#jobs-table').DataTable().ajax.reload();
+                } else {
+                    alert('Position could not be deleted. Please try again.');
+                }
+            }
+        });
+    }
+});
+
+</script>
 
 </body>
 </html>

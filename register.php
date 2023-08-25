@@ -1,39 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <script>
-      function validateForm() {
-        var username = document.getElementById("username").value;
-        var password = document.getElementById("password").value;
-
-        if (username === "" || password === "") {
-          alert("Please fill in all fields.");
-          return false;
-        }
-
-        return true;
-      }
-    </script>
-  </head>
-  <body>
-    <form action="register.php" method="post" onsubmit="return validateForm();">
-      <label for="username">Username:</label>
-      <input type="text" name="username" id="username" required />
-      <br />
-      <label for="password">Password:</label>
-      <input type="password" name="password" id="password" required />
-      <br />
-      <button type="submit" name="register">Register</button>
-    </form>
-
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+</head>
+<body>
+    <h1>User Registration</h1>
     <?php
-    // Include the registration logic from your login.php file
+    session_start();
+    include('dbcon.php'); 
+
     if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["register"])) {
         $username = $_POST["username"];
         $password = $_POST["password"];
-        registerUser($pdo, $username, $password);
-        loginUser($pdo, $username, $password);
+        
+        
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+        
+        $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+        $stmt = $conn->prepare($sql); 
+        $stmt->bind_param("ss", $username, $hashedPassword);
+        
+        if ($stmt->execute()) {
+            header("Location: dashboard.php");
+            exit();
+        } else {
+            echo "Registration failed. Please try again.";
+        }
     }
     ?>
-  </body>
+    
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+        
+        <button type="submit" name="register">Register</button>
+    </form>
+</body>
 </html>

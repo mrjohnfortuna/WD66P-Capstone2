@@ -4,19 +4,14 @@ include('dbcon.php'); // Include your database connection
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
     $positionId = $_POST['id'];
 
-    // Perform the delete operation (replace with your actual delete query)
-    $deleteQuery = $conn->prepare("DELETE FROM `jobs_to_fill` WHERE id = ?");
+    // Perform the delete operation 
+    $deleteQuery = $conn->prepare("DELETE FROM `jobs to fill` WHERE id = ?");
     $deleteQuery->bind_param("i", $positionId);
 
     if ($deleteQuery->execute()) {
         $response = [
             'success' => true,
             'message' => 'Position deleted successfully'
-        ];
-    } else {
-        $response = [
-            'success' => false,
-            'message' => 'Position could not be deleted'
         ];
     } else {
         $response = [
